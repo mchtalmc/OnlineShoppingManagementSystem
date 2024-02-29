@@ -1,6 +1,6 @@
 package me.project.demo.Entity;
 
-public enum Category {
+public enum CategoryEnum {
     MOBILE,
     BOOKS,
     CLOTHES,

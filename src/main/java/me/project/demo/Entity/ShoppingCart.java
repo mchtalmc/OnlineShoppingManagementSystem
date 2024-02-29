@@ -10,27 +10,15 @@ import lombok.experimental.SuperBuilder;
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @SuperBuilder
-public class Adress {
+public class ShoppingCart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long addresId;
-
-    private String streetNo;
-
-    private String buildingName;
-
-    private String city;
-
-    private String state;
-
-    private String country;
-
-    private String pincode;
+    private Long cardId;
+    @ManyToOne
+    private Products cartItem;
     @ManyToOne
     private Customer customer;
-
-
 }
