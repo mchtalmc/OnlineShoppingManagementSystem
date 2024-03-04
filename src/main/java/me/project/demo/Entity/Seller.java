@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,17 +11,18 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
+
 @Entity
-@Table(name = "customer")
+@Table(name = "seller")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class Customer {
+public class Seller {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long customerId;
+    private Long sellerId;
 
     private String firstName;
 
@@ -32,7 +32,7 @@ public class Customer {
     private String phoneNumber;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "seller")
     private List<Adress> adressList;
 
     @Email(message = "Enter a valid email address")
@@ -42,8 +42,8 @@ public class Customer {
     private String password;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "customer")
-    private List<Order> orders;
+    @OneToMany(mappedBy = "seller")
+    private List<Products> products;
 
     @OneToOne
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

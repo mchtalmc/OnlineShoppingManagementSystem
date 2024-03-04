@@ -1,5 +1,6 @@
 package me.project.demo.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,6 +9,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @Entity
+@Table(name = "adress")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -16,21 +18,23 @@ import lombok.experimental.SuperBuilder;
 public class Adress {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long addresId;
-
-    private String streetNo;
-
-    private String buildingName;
+    private Long id;
 
     private String city;
+
+    private String street;
 
     private String state;
 
     private String country;
 
-    private String pincode;
+    @JsonIgnore
     @ManyToOne
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
-
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "seller_id")
+    private Seller seller;
 }
