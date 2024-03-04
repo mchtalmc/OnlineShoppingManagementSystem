@@ -36,6 +36,7 @@ public class Customer {
     private List<Adress> adressList;
 
     @Email(message = "Enter a valid email address")
+    @Column(unique = true)
     private String email;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
