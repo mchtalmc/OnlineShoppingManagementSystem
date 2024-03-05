@@ -2,6 +2,7 @@ package me.project.demo.Controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import me.project.demo.Entity.Customer;
 import me.project.demo.Service.CustomerService;
 import me.project.demo.payload.request.CustomerRequest;
 import me.project.demo.payload.response.CustomerResponse;
@@ -28,6 +29,12 @@ public class CustomerController {
     public ResponseEntity<CustomerResponse> getCustomerById(@PathVariable Long customerId){
 
         return customerService.getCustomerById(customerId);
+    }
+
+    @PutMapping("/updateCustomer/{id}")
+    public ResponseEntity<CustomerResponse> updateCustomer(@PathVariable Long id,
+                                                   CustomerRequest customerRequest){
+        return customerService.updateCustomerById(id,customerRequest);
     }
 
 

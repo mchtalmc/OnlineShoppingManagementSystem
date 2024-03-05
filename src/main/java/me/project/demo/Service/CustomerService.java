@@ -24,7 +24,7 @@ public class CustomerService {
     //Save Customer
     public ResponseEntity<CustomerResponse> saveCustomer(CustomerRequest customerRequest) {
         //Email ve phone unique mi ? // customer ve seller servise gidip check etmem gerekiyor.
-       uniquePropertyValidator.validateUnique(customerRequest.getEmail(), customerRequest.getPhoneNumber());
+       uniquePropertyValidator.checkDuplicate(customerRequest.getEmail(), customerRequest.getPhoneNumber());
        //DTO=POJO
         Customer customer=  customerMapper.mapCustomerRequestToCustomer(customerRequest);
         //role
@@ -34,10 +34,26 @@ public class CustomerService {
     }
 
     //GetById
+    public Customer isExistUserById(Long id) {
+        return customerReposityory.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(String.format(ErrorMessages.USER_NOT_FOUND, id)));
+    }
     public ResponseEntity<CustomerResponse> getCustomerById(Long customerId) {
-       Customer customer= customerReposityory.findById(customerId).orElseThrow(()->
-                new ResourceNotFoundException(String.format(USER_NOT_FOUND, customerId)));
+       Customer customer=isExistUserById(customerId);
        return ResponseEntity.ok(customerMapper.mapCustomerToCustomerRespnse(customer));
+
+    }
+
+    public ResponseEntity<CustomerResponse> updateCustomerById(Long id, CustomerRequest customerRequest) {
+        Customer customer=isExistUserById(id);
+        //checkdublicate
+        uniquePropertyValidator.checkUniqueProperty(customer,customerRequest);
+        //dto-pojo
+        Customer updateCustomer=customerMapper.mapCustomerRequestToCustomer(customerRequest);
+        //passwordencode
+        //set role
+        Customer savedCustomer= customerReposityory.save(updateCustomer);
+        return ResponseEntity.ok(customerMapper.mapCustomerToCustomerRespnse(savedCustomer));
 
     }
 }
