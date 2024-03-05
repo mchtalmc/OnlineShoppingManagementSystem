@@ -7,10 +7,7 @@ import me.project.demo.payload.request.CustomerRequest;
 import me.project.demo.payload.response.CustomerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/customers")
@@ -24,6 +21,13 @@ public class CustomerController {
     public ResponseEntity<CustomerResponse> saveCustomers (@Valid @RequestBody CustomerRequest customerRequest){
 
         return customerService.saveCustomer(customerRequest);
+    }
+
+
+    @GetMapping("/{customerId}")
+    public ResponseEntity<CustomerResponse> getCustomerById(@PathVariable Long customerId){
+
+        return customerService.getCustomerById(customerId);
     }
 
 
